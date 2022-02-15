@@ -11,6 +11,9 @@ export class Navigation {
 
   history: History;
 
+  @observable
+  action: string | null = null;
+
   constructor() {
     makeAutoObservable(this, undefined, {
       autoBind: true
@@ -18,8 +21,9 @@ export class Navigation {
   }
 
   @action
-  setLocation(location) {
-    this.location = location;
+  setState(state) {
+    this.location = state.location;
+    this.action = state.action;
   }
 
   @action
@@ -42,7 +46,7 @@ export class Navigation {
    */
   @action
   goBack() {
-    console.warn(`[deprecated] 请使用back方法`)
+    console.warn(`[deprecated] 请使用back方法`);
     this.back();
   }
 
@@ -53,7 +57,7 @@ export class Navigation {
 
   @action
   goForward() {
-    console.warn(`[deprecated] 请使用forward方法`)
+    console.warn(`[deprecated] 请使用forward方法`);
     this.forward();
   }
 
