@@ -10,7 +10,7 @@ export interface HashRouterProps extends Omit<NativeHashRouterProps, 'window'> {
 
 const history = syncHistory(createHashHistory());
 
-export const MobxHashRouter: React.FC<HashRouterProps> = observer(React.memo(props => {
+export const MobxHashRouter: React.FC<HashRouterProps> = React.memo(observer(props => {
   const { location, action } = navigationServices;
   return <Router {...props} location={location} navigationType={action} navigator={history}/>;
 }));

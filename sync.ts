@@ -5,9 +5,7 @@ export function syncHistory(history: History) {
   // init
   navigationServices.history = history;
 
-  history.listen((update) => {
-    navigationServices.setState(update);
-  });
+  history.listen(navigationServices.setState);
 
   navigationServices.setState({
     action: history.action,
