@@ -27,13 +27,13 @@ export class Navigation {
   }
 
   @action
-  push(location) {
-    this.history.push(location);
+  push(location, state?: any) {
+    this.history.push(location, state);
   }
 
   @action
-  replace(location) {
-    this.history.replace(location);
+  replace(location, state?: any) {
+    this.history.replace(location, state);
   }
 
   @action
@@ -41,24 +41,10 @@ export class Navigation {
     this.history.go(n);
   }
 
-  /**
-   * @deprecated 请使用 back
-   */
-  @action
-  goBack() {
-    console.warn(`[deprecated] 请使用back方法`);
-    this.back();
-  }
 
   @action
   back() {
     this.history.back();
-  }
-
-  @action
-  goForward() {
-    console.warn(`[deprecated] 请使用forward方法`);
-    this.forward();
   }
 
   @action
