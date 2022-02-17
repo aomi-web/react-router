@@ -1,57 +1,39 @@
-import { action, makeAutoObservable, observable } from 'mobx';
-import { History, Location } from 'history';
+import { NavigateFunction, NavigateOptions } from 'react-router-dom';
+import { To } from 'history';
 
 /**
  * 导航服务
  */
 export class Navigation {
 
-  @observable
-  location: Location | null = null;
+  nf: NavigateFunction;
 
-  history: History;
+  navigate(to: To, options?: NavigateOptions) {
+    this.nf?.(to, options);
+  }
 
-  @observable
-  action: string | null = null;
+  push(to: To, options?: NavigateOptions) {
+    this.navigate(to, options);
+  }
 
-  constructor() {
-    makeAutoObservable(this, undefined, {
-      autoBind: true
+  replace(to: To, options?: NavigateOptions) {
+    this.navigate(to, {
+      ...options,
+      replace: true
     });
   }
 
-  @action
-  setState(state) {
-    this.location = state.location;
-    this.action = state.action;
-  }
-
-  @action
-  push(location, state?: any) {
-    this.history.push(location, state);
-  }
-
-  @action
-  replace(location, state?: any) {
-    this.history.replace(location, state);
-  }
-
-  @action
   go(n) {
-    this.history.go(n);
+    this.nf?.(n);
   }
 
-
-  @action
   back() {
-    this.history.back();
+    this.nf?.(-1);
   }
 
-  @action
-  forward() {
-    this.history.forward();
+  setNavigate(navigate: NavigateFunction) {
+    this.navigate = navigate;
   }
-
 }
 
 export const navigationServices = new Navigation();
