@@ -8,7 +8,7 @@ const NavigationWrapper = React.memo(() => {
   useEffect(() => {
     navigationServices.setNavigate(navigate);
   });
-  return undefined;
+  return <></>;
 });
 
 export const NavigationHashRouter: React.FC<NativeHashRouterProps> = React.memo(({ children, ...props }) => {

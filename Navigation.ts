@@ -32,7 +32,7 @@ export class Navigation {
   }
 
   setNavigate(navigate: NavigateFunction) {
-    this.navigate = navigate;
+    this.nf = navigate;
   }
 }
 
