@@ -1,39 +1,33 @@
-import { NavigateFunction, NavigateOptions } from 'react-router-dom';
-import { To } from 'history';
+import { History } from 'history';
 
 /**
  * 导航服务
  */
 export class Navigation {
 
-  nf: NavigateFunction;
+  history: History;
 
-  navigate(to: To, options?: NavigateOptions) {
-    this.nf?.(to, options);
+  push(location, state?: any) {
+    this.history.push(location, state);
   }
 
-  push(to: To, options?: NavigateOptions) {
-    this.navigate(to, options);
-  }
-
-  replace(to: To, options?: NavigateOptions) {
-    this.navigate(to, {
-      ...options,
-      replace: true
-    });
+  replace(location, state?: any) {
+    this.history.replace(location, state);
   }
 
   go(n) {
-    this.nf?.(n);
+    this.history.go(n);
   }
+
 
   back() {
-    this.nf?.(-1);
+    this.history.back();
   }
 
-  setNavigate(navigate: NavigateFunction) {
-    this.nf = navigate;
+  forward() {
+    this.history.forward();
   }
+
 }
 
 export const navigationServices = new Navigation();
