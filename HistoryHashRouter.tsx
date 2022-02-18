@@ -1,5 +1,5 @@
-import React from 'react';
-import { HashRouterProps as NativeHashRouterProps, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import React, { useLayoutEffect, useState } from 'react';
+import { HashRouterProps as NativeHashRouterProps, Router } from 'react-router-dom';
 import { createHashHistory } from 'history';
 import { navigationServices } from './Navigation';
 
@@ -8,9 +8,20 @@ const history = createHashHistory();
 navigationServices.history = history;
 
 export const HistoryHashRouter: React.FC<NativeHashRouterProps> = React.memo(({ children, ...props }) => {
+
+  let [state, setState] = useState({
+    action: history.action,
+    location: history.location
+  });
+  useLayoutEffect(() => history.listen(setState), [history]);
+
   return (
-    <HistoryRouter {...props} history={history} >
+    <Router {...props}
+            location={state.location}
+            navigationType={state.action}
+            navigator={history}
+    >
       {children}
-    </HistoryRouter>
+    </Router>
   );
 });
